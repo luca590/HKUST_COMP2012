@@ -1,5 +1,7 @@
 #include<iostream>
 #include<cstring>
+#include <cmath>
+#include <limits>
 
 using namespace std;
 //template<>
@@ -11,7 +13,7 @@ private:
 };
 
 
-template <typename T, typename Y, typename X>
+template <typename T, typename Y, typename X, int h> //h is considered as data member here
 class A {
 private:
 int x;
@@ -35,15 +37,35 @@ return a;
 template <class itDoesntReallyMatter>
 itDoesntReallyMatter* anotherFunction();
 
+const A& operator=(const A& a) const;
+
 T publicTemVar;
 }; // class A ends here
 
+template <typename Q> // general version for all integral or equivalent types
+bool same(Q a, Q b) {
+  cout << "version - general" << endl;
+  return (a == b) ? true : false;
+}
+ 
+template<> // a specialized version of function template “same”
+bool same<float>(float a, float b) { // version for float type
+  cout << "version - float" << endl;
+  return (fabs(a - b) < numeric_limits<float>::epsilon()) ? true : false;
+}
+ 
+template<> // a specialized version of function template “same”
+bool same<double>(double a, double b) { // version for double type
+  cout << "version - double" << endl;
+  return (fabs(a - b) < numeric_limits<double>::epsilon()) ? true : false;
+}
+ 
 
 int main() {
-A <int, int, int> a(10); 
-a.function(11, 12);
+A <int, int, int> a(10);  
+a.function(11, 12); 
 
-cout << a << endl;
+cout << a << endl; 
 
 return 0;
 }

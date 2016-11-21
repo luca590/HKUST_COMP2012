@@ -19,6 +19,7 @@ int x;
 int& ref; 
 
 public:
+B():x(0),ref(x){cout << "B's constructor is called" << endl;}
 B(int y):x(y), ref(x){cout << "B has been initialized!!!!!!! and x is: " << x << endl; }
 
 friend ostream& operator<<(ostream& os, const B& b){
@@ -39,9 +40,10 @@ cout << "A is being initialized... " << endl;
 a = 10;
 }//CANNOT INITIALIZE STATIC DATA MEM. IN CONSTRUCTOR
 static const B c;// = 2;
-static double gg = 11; 
+static double gg ;//= 11; 
 const static int d = 9;
-int e = 10;
+//int e = 10; ERROR
+B myBObject();//10);
 
 friend ostream& operator<<(ostream& os, const A& a) {
 return os << "\nprinting class A...\na is: " << a.a << " and b is: " << a.b << " and static const B c is: " << a.c << endl;
@@ -61,11 +63,12 @@ char A::static_char = 'f'; //cannot write 'static' before 'char'! 'static' can o
 
 static int aGlobalVariable = 5;
 static int aGlobalFunction() {
+
+double A::gg = 10;// NOT ALLOWED TO DEFINE IN MAIN (or any other function)
 return aGlobalVariable;
 }
 
 int main() {
-//double A::gg = 10;// NOT ALLOWED TO DEFINE IN MAIN (or any other function)
 A a;
 cout << "static const int:  " << a.c << endl;
 cout << "getSomething returns:  " << a.getSomething() << endl;
